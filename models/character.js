@@ -1,5 +1,8 @@
 // Models
 
+// import mongoose
+const mongoose = require("mongoose") 
+
 // pull from mongoose
 const {Schema, model} = mongoose
 
@@ -12,5 +15,15 @@ const characterSchema = new Schema({
     },
     numberOfAppearances: Number,
     affiliation: String,
-    lastModified: Date
+    lastModified:{
+        type:"Date",
+        default: Date.now
+    }
 })
+
+// make character model
+const Character = model("Character", characterSchema)
+
+// export
+module.exports = Character
+// end
