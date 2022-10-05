@@ -15,11 +15,10 @@ const characterSchema = new Schema({
     },
     numberOfAppearances: Number,
     affiliation: String,
-    lastModified:{
-        type:"Date",
-        default: Date.now
-    }
-})
+    
+},
+{timestamps: true}
+)
 
 // make character model
 const Character = model("Character", characterSchema)
