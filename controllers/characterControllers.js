@@ -15,7 +15,7 @@ const router = express.Router()
 
 // GET request
 // index route -> shows all instances of a document in the DB
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     Character.find({})
         .then(characters => {
             res.json({ characters: characters })
@@ -24,7 +24,8 @@ app.get("/", (req, res) => {
 })
 
 // POST request
-app.post("/", (req, res) => {
+router.post("/", (req, res) => {
+    req.body.contributor = req.session.userId
     Character.create(req.body)
     .then(character => {
         // send the user a '201 created' response, along with new character
@@ -35,7 +36,7 @@ app.post("/", (req, res) => {
 
 // PUT request
 // update route -> updates a specific route
-app.put("/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     const id = req.params.id
     Character.findByIdAndUpdate(id, req.body, {new: true})
         .then(character => {
@@ -48,7 +49,7 @@ app.put("/:id", (req, res) => {
 
 // DELETE request
 // destroy route -> finds and deletes a single resource
-app.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     const id =req.params.id
     Character.findByIdAndRemove(id)
         .then(character => {
@@ -60,7 +61,7 @@ app.delete("/:id", (req, res) => {
 
 // GET request
 // show route -> find and display a single document
-app.get("/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     // grab the id from the request
     const id = req.params.id
     Character.findById(id)

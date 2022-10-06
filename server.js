@@ -5,6 +5,7 @@ require("dotenv").config() // Load ENV Variables
 const express = require("express") // import express
 const path = require("path") // import path module
 const CharacterRouter = require('./controllers/characterControllers')
+const QuoteRouter = require('./controllers/quoteControllers')
 const UserRouter = require('./controllers/userControllers')
 const middleware = require('./utils/middleware')
 
@@ -23,10 +24,10 @@ app.get("/", (req, res) => {
     res.send("Server is running")
 })
 
+// root paths
 app.use('/characters', CharacterRouter)
 app.use('/users', UserRouter)
-
-
+app.use('/quotes', QuoteRouter)
 
 /////////////////////////////////////////////
 // Server Listener
