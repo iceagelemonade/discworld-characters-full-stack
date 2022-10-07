@@ -13,7 +13,17 @@ const router = express.Router()
 /////////////////////////////////////////
 // Routes
 /////////////////////////////////////////
-// route for sign up
+
+///////////////////////////
+// SIGN UP
+///////////////////////////
+
+// GET route for sign up
+router.get('/signup', (req, res) => {
+    res.render('users/signup')
+})
+
+// POST route for sign up
 router.post('/signup', async (req, res) => {
     // this route will receive a req.body
     console.log('this is our initial req.body', req.body)
@@ -28,14 +38,22 @@ router.post('/signup', async (req, res) => {
     User.create(req.body)
         // if successful, console log the user(for now)
         .then(user => {
-            console.log(user)
-            res.status(201).json({ username: user.username})
+            res.redirect('/users/login')
         })
         // if an error occurs, log the error
         .catch(err => {
             console.log(err)
             res.json(err)
         })
+})
+
+///////////////////////////
+// LOGIN
+///////////////////////////
+
+// GET route for logging in
+router.get('/login', (req, res) => {
+    res.render('users/login')
 })
 
 // a route for log in
@@ -61,9 +79,7 @@ router.post('/login', async (req, res) => {
 
                     console.log('this is req.session', req.session) 
 
-                    // we'll send a 201 status and the user as json for now
-                    // we'll change this later for security purposes
-                    res.status(201).json({ user: user.toObject() })
+                    res.redirect('/characters/index')
                 } else {
                     res.json({ error: 'username or password incorrect' })
                 }
@@ -78,14 +94,26 @@ router.post('/login', async (req, res) => {
         })
 })
 
-// a route for log out 
+///////////////////////////
+// SIGN OUT
+///////////////////////////
+
+// GET rout for log out
+router.get('/logout', (req, res) => {
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId        
+    res.render('users/logout', { username, loggedIn, userId })
+})
+
+// DESTROY route for log out 
 router.delete('/logout', (req, res) => {
     // destroy the session(eventually we'll redirect)
     req.session.destroy(err => {
         console.log('req.session after logout', req.session)
         console.log('err on logout?', err)
-
-        res.sendStatus(204)
+    
+        // res.sendStatus(204)
     })
 })
 

@@ -4,6 +4,7 @@
 require("dotenv").config() // Load ENV Variables
 const morgan = require('morgan') // import morgan
 const express = require('express') // import express
+const methodOverride = require('method-override')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 
@@ -12,6 +13,7 @@ const MongoStore = require('connect-mongo')
 /////////////////////////////////////////////
 
 const middleware = (app) => {
+    app.use(methodOverride('_method'))
     app.use(morgan('tiny')) // this is for request logging, the 'tiny' arguement declares what size morgan log to use.
     app.use(express.urlencoded({extended: true})) // this parses urlEncoded request bodies(useful for Post and Put requests)
     app.use(express.static('public')) // serves files from the public folder statically

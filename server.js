@@ -11,7 +11,7 @@ const middleware = require('./utils/middleware')
 
 
 // create Express Application Object
-const app = express()
+const app = require("liquid-express-views")(express())
 
 //////////////////////
 // Middleware
@@ -21,7 +21,11 @@ middleware(app)
 // Routes
 // test route and server
 app.get("/", (req, res) => {
-    res.send("Server is running")
+    // res.send("Server is running")
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+    res.render('index.liquid', {username, loggedIn, userId})
 })
 
 // root paths
