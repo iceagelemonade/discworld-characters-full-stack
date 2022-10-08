@@ -1,26 +1,32 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div>
-        <h2 class="display-6">All Fruits</h2>
+        <h2 class="display-6">All Characters</h2>
         <div class="row">
-            {% comment %} {% for fruit in fruits %}
-                <div class="card">
-                    <h5 class="card-header">{{fruit.name}}</h5>
+            
+            {% for character in characters %}
+                
+                <div class="card" style="width: 20rem;">
+                    <h5 class="card-header">{{character.name}}</h5>
                     <div class="card-body">
                         <h5 class="card-title">
-                            {% if fruit.readyToEat %}
-                                Ripe
+                            {{forloop.index}}
+                            {% if character.quotes.length > 0 %}
+                                "{{character.random}}"
+                                
+                                
                             {% else %}
-                                Not Ripe
+                                No quotes have been added.
                             {% endif %}
                         </h5>
-                        <p class="card-text">The color of this {{fruit.name}} is {{fruit.color}}.</p>
-                        <a class="btn btn-info" href="/fruits/{{fruit.id}}">
-                            View {{fruit.name}}
+                        
+                        <a class="btn btn-info" href="/characters/{{character.id}}">
+                            View {{character.name}}
                         </a>
                     </div>
-                </div>        
-            {% endfor %}  {% endcomment %}
+                </div> 
+                      
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

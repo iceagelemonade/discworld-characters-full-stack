@@ -3,24 +3,55 @@
     <div class="container-md">
         <article>
             <h2>{{character.name}}</h2>
-            <h4>
-                {% if fruit.readyToEat %}
-                    Ripe and Ready
-                {% else %}
-                    Not Ripe, Not Ready
-                {% endif %}
-            </h4>
-            <h4>The color of this fruit is: {{fruit.color}}</h4>
+            <h3>Affiliations: {{character.affiliation}}</h3>
+            <h4>Species: {{character.species}}</h4>
+            
             {% if fruit.owner == userId %}
                 <div class="btn-group">
                     {%- comment -%} first button will send us to the edit page {%- endcomment -%}
-                    <a class="btn btn-primary" href="/fruits/edit/{{fruit.id}}">Edit</a>
+                    <a class="btn btn-primary" href="/characters/edit/{{character.id}}">Edit</a>
                     {%- comment -%} the second button(which will actually be a form, will send a DELETE request) {%- endcomment -%}
-                    <form action="/fruits/{{fruit.id}}?_method=DELETE" method="POST">
+                    <form action="/characters/{{character.id}}?_method=DELETE" method="POST">
                         <input class="btn btn-danger" type="submit" value="Delete">
                     </form>
                 </div>
             {% endif %}
         </article>
+        <hr>
+        <h4>Quotes</h4>
+        
+        <hr>
+        {% if character.quotes.length > 0%}
+            <div class="container-sm justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    {% for quote in character.quotes %}
+                        {% render '../quote.liquid', quote: quote, userId: userId, character: character %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <small>no quotes yet...</small>
+        {% endif %}
+        <hr>
+        {% if loggedIn %}
+            <div class="col-md-6">
+                <form action="/quotes/{{character.id}}" method="POST">
+                    <fieldset>
+                        <legend>Add quote</legend>
+                        <label class="form-label">Quote:</label>
+                        <input class="form-control" type="text" placeholder="enter quote from or related to {{charcater.name}} (exclude quotation marks)" name="quote" required>
+                        <label class="form-label">From book:</label>
+                        <input class="form-control" type="text" placeholder="Name of book" name="book" required>
+                        <label class="form-label">On page:</label>
+                        <input class="form-control mb-1" type="number" placeholder="Page Number" name="page">
+                    </fieldset>
+                    <input class="btn btn-success" type="submit" value="add quote">
+                </form>
+            </div>
+        {% else %}
+            <div class="col-md-6">
+                <small>If you'd like to add a quote, please log in...</small>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

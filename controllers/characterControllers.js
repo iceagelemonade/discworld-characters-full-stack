@@ -1,3 +1,29 @@
+
+
+// const randQuote = (characters) => {
+//     const arr =[]
+//     characters.forEach(character => {
+//         if (character.quotes.length > 0) {
+//             arr.push(character.quotes[Math.floor(Math.random() * character.quotes.length)].quote)
+//         } else {
+//             arr.push('')
+//         }
+//     })
+//     return arr
+// }
+
+const randQuote = (characters) => {
+    const arr =[]
+    characters.forEach(character => {
+        if (character.quotes.length > 0) {
+            character.random = (character.quotes[Math.floor(Math.random() * character.quotes.length)].quote)
+        } else {
+            character.random = ''
+        }
+    })
+    
+}
+
 ////////////////////////////////////////
 // Import Dependencies
 ////////////////////////////////////////
@@ -18,33 +44,65 @@ const router = express.Router()
 router.get("/", (req, res) => {
     Character.find({})
         .then(characters => {
-            res.json({ characters: characters })
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+
+
+
+            const randomQuote = randQuote(characters)
+            console.log(randomQuote)
+            res.render('characters/index', { characters, username, loggedIn, userId })
         })
-        .catch(err => console.log(err))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
+
+// GET for new fruit
+// renders the form to create a fruit
+router.get('/new', (req, res) => {
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+
+    res.render('characters/new', { username, loggedIn, userId })
+})
+
 
 // POST request
 router.post("/", (req, res) => {
     req.body.contributor = req.session.userId
     Character.create(req.body)
     .then(character => {
+        const username = req.session.username
+        const loggedIn = req.session.loggedIn
+        const userId = req.session.userId
         // send the user a '201 created' response, along with new character
-        res.status(201).json({character: character.toObject() })
+        res.redirect('/characters')
     })
-    .catch(error => console.log(error))
+    .catch(error => res.redirect(`/error?error=${err}`))
 })
 
 // PUT request
 // update route -> updates a specific route
 router.put("/:id", (req, res) => {
+    // console.log("I hit the update route", req.params.id)
     const id = req.params.id
-    Character.findByIdAndUpdate(id, req.body, {new: true})
+    // req.body.readyToEat = req.body.readyToEat === 'on'?true:false
+
+    Fruit.findById(id)
         .then(character => {
-            console.log('Update Successful: ', character)
-            // update success is called '204 - no content'
-            res.sendStatus(204)
+            if (character.contributor == req.session.userId) {
+                // must return when using updateOne
+                return character.updateOne(req.body)
+                
+            } else {
+                res.sendStatus(401)
+            }
         })
-        .catch(err => console.log(err))
+        .then(() => {
+            res.redirect(`/characters/${id}`)
+        })
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // DELETE request
@@ -53,10 +111,10 @@ router.delete("/:id", (req, res) => {
     const id =req.params.id
     Character.findByIdAndRemove(id)
         .then(character => {
-            res.sendStatus(204)
+            res.redirect('/characters')
         })
         // send error if not
-        .catch(err => res.json(err))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // GET request
@@ -65,10 +123,15 @@ router.get("/:id", (req, res) => {
     // grab the id from the request
     const id = req.params.id
     Character.findById(id)
+    .populate("quotes.contributor", "username")
         .then(character => {
-            res.json({ character: character })
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+            
+            res.render('characters/show', { character, username, loggedIn, userId })
         })
-        .catch(err => console.log(err))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 //////////////////////////////////////////

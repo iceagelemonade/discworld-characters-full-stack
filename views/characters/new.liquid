@@ -2,17 +2,27 @@
 {% block content %}
     
     <div class ="container-sm">
-        <form action="/fruits" method="POST">
+        <form action="/characters" method="POST">
             <fieldset>
-                <legend>Create New Fruit</legend>
+                <legend>Add New Character</legend>
                 <label class="form-label">Name: </label>
-                <input class="form-control" type="text" name="name" placeholder="enter the name of the fruit">
-                <label class="form-label">Color: </label>
-                <input class="form-control" type="text" name="color" placeholder="what color is the fruit?">
-                <label class="form-label">Ready To Eat? </label>
-                <input class="form-check-input" type="checkbox" name="readyToEat">
+                <input class="form-control" type="text" name="name" placeholder="enter character's name" required>
+                <label class="form-label">Species: </label>
+                <select class="form-select" name="species">
+                    <option value="unknown">Unknown</option>
+                    <option value="human">Human</option>
+                    <option value="dwarf">Dwarf</option>
+                    <option value="gnome">Gnome</option>
+                    <option value="troll">Troll</option>
+                    <option value="undead">Undead</option>
+                    <option value="god">God</option>
+                </select>
+                <label class="form-label">Number of Appearances: </label>
+                <input class="form-control" type="number" name="numberOfAppearances" placeholder="Enter number of books this character has appeared in">
+                <label class="form-label">Affiliations: </label>
+                <input class="form-control" type="text" name="affiliation" placeholder="AM City Watch, Church of Om, Assassin's Guild, etc.">
             </fieldset>
-            <input class="btn btn-success" type="submit" value="Create New Fruit">
+            <input class="btn btn-success mt-2" type="submit" value="Add Character">
         </form>
     <div>
 {% endblock %}

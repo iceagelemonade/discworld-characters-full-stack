@@ -1,0 +1,22 @@
+{% block content %}
+    <div class="card mb-4 shadow">
+        <div class="card-body">
+            
+            <div>
+                <small>From: {{quote.book}}</small>
+            </div>
+            <div>
+                <small>Page: {{quote.page}}</small>
+            </div>
+            <p>"{{ quote.quote }}"</p>
+            <div class="d-flex justify-content-between">
+                <small>Contributor: {{ quote.contributor.username }}</small>
+                {% if quote.contributor == userId %}
+                    <form action="/quotes/delete/{{character.id}}/{{quote.id}}?_method=DELETE" method="POST">
+                        <input class="btn btn-danger" type="submit" value="X">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

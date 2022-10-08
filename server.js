@@ -33,6 +33,21 @@ app.use('/characters', CharacterRouter)
 app.use('/users', UserRouter)
 app.use('/quotes', QuoteRouter)
 
+// this renders an error page, gets the error from a URL request query
+app.get('/error', (req, res) => {
+    // get session variables
+    const { username, loggedIn, userId } = req.session
+    const error = req.query.error || 'This page does not exist'
+
+    res.render('error.liquid', {error, username, loggedIn, userId })
+})
+
+// this is a catch all route that will redirect to the error page for anything doesn't satisfy a controller
+app.all('*', (req, res) => {
+    res.redirect('/error')
+})
+
+
 /////////////////////////////////////////////
 // Server Listener
 /////////////////////////////////////////////
