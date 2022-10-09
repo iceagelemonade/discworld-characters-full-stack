@@ -1,0 +1,28 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+    
+    <div class ="container-sm">
+        <form action="/characters/{{character.id}}?_method=PUT" method="POST">
+            <fieldset>
+                <legend>Edit {{character.name}}</legend>
+                <label class="form-label">Name: </label>
+                <input class="form-control" type="text" name="name" placeholder="enter character's name" required value="{{character.name}}">
+                <label class="form-label">Species: </label>
+                <select class="form-select" name="species" selected="{{character.species}}">
+                    <option value="unknown">Unknown</option>
+                    <option value="human">Human</option>
+                    <option value="dwarf">Dwarf</option>
+                    <option value="gnome">Gnome</option>
+                    <option value="troll">Troll</option>
+                    <option value="undead">Undead</option>
+                    <option value="god">God</option>
+                </select>
+                <label class="form-label">Number of Appearances: </label>
+                <input class="form-control" type="number" name="numberOfAppearances" placeholder="Enter number of books this character has appeared in" value="{{character.numberOfApperances}}">
+                <label class="form-label">Affiliations: </label>
+                <input class="form-control" type="text" name="affiliation" placeholder="AM City Watch, Church of Om, Assassin's Guild, etc." value="{{character.affiliation}}">
+            </fieldset>
+            <input class="btn btn-success mt-2" type="submit" value="Edit Character">
+        </form>
+    <div>
+{% endblock %}

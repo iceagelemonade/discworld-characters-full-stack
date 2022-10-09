@@ -3,14 +3,18 @@
         <div class="card-body">
             
             <div>
-                <small>From: {{quote.book}}</small>
+                <small>From: <u>{{quote.book}}</u></small>
             </div>
             <div>
-                <small>Page: {{quote.page}}</small>
+                {% if quote.page != null %}
+                    <small>Page: {{quote.page}}</small>
+                {% endif %}    
             </div>
             <p>"{{ quote.quote }}"</p>
             <div class="d-flex justify-content-between">
-                <small>Contributor: {{ quote.contributor.username }}</small>
+                {% if quote.contributor != null%}
+                    <small>Contributor: {{ quote.contributor.username }}</small>
+                {% endif %}
                 {% if quote.contributor == userId %}
                     <form action="/quotes/delete/{{character.id}}/{{quote.id}}?_method=DELETE" method="POST">
                         <input class="btn btn-danger" type="submit" value="X">

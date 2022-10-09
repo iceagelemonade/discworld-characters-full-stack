@@ -1,35 +1,11 @@
 
-
-// const randQuote = (characters) => {
-//     const arr =[]
-//     characters.forEach(character => {
-//         if (character.quotes.length > 0) {
-//             arr.push(character.quotes[Math.floor(Math.random() * character.quotes.length)].quote)
-//         } else {
-//             arr.push('')
-//         }
-//     })
-//     return arr
-// }
-
-const randQuote = (characters) => {
-    const arr =[]
-    characters.forEach(character => {
-        if (character.quotes.length > 0) {
-            character.random = (character.quotes[Math.floor(Math.random() * character.quotes.length)].quote)
-        } else {
-            character.random = ''
-        }
-    })
-    
-}
-
 ////////////////////////////////////////
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express")
 const Character = require("../models/character")
-
+// simple script file used for simple functions that aren't directly related to routes
+const randQuote = require("../scripts")
 /////////////////////////////////////////
 // Create Router
 /////////////////////////////////////////
@@ -63,7 +39,6 @@ router.get('/new', (req, res) => {
     const username = req.session.username
     const loggedIn = req.session.loggedIn
     const userId = req.session.userId
-
     res.render('characters/new', { username, loggedIn, userId })
 })
 
@@ -82,6 +57,39 @@ router.post("/", (req, res) => {
     .catch(error => res.redirect(`/error?error=${err}`))
 })
 
+// GET request
+
+router.get('/mine', (req, res) => {
+    Character.find({ contributor: req.session.userId })
+    // then display the fruits
+        .then(characters => {
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+            const randomQuote = randQuote(characters)
+            res.render('characters/mine', { characters, username, loggedIn, userId })
+        })
+    // or throw an error if there is one
+        .catch(err => res.redirect(`/error?error=${err}`))
+})
+
+
+// GET request to show the update page
+router.get("/edit/:id", (req, res) => {
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+    const charId = req.params.id
+
+    Character.findById(charId)
+        .then(character => {
+            res.render('characters/edit', { character, username, loggedIn, userId })
+        })
+            .catch(err => {
+                res.redirect(`/error?error=${err}`)
+            })
+})
+
 // PUT request
 // update route -> updates a specific route
 router.put("/:id", (req, res) => {
@@ -89,7 +97,7 @@ router.put("/:id", (req, res) => {
     const id = req.params.id
     // req.body.readyToEat = req.body.readyToEat === 'on'?true:false
 
-    Fruit.findById(id)
+    Character.findById(id)
         .then(character => {
             if (character.contributor == req.session.userId) {
                 // must return when using updateOne
@@ -117,7 +125,7 @@ router.delete("/:id", (req, res) => {
         .catch(err => res.redirect(`/error?error=${err}`))
 })
 
-// GET request
+// SHOW request
 // show route -> find and display a single document
 router.get("/:id", (req, res) => {
     // grab the id from the request

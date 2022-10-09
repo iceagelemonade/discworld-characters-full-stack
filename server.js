@@ -19,13 +19,13 @@ const app = require("liquid-express-views")(express())
 middleware(app)
 
 // Routes
-// test route and server
+// Home Route:
 app.get("/", (req, res) => {
-    // res.send("Server is running")
-    const username = req.session.username
-    const loggedIn = req.session.loggedIn
-    const userId = req.session.userId
-    res.render('index.liquid', {username, loggedIn, userId})
+    if (req.session.loggedIn) {
+        res.redirect('/characters')
+    } else {
+        res.render('index.liquid')
+    }
 })
 
 // root paths

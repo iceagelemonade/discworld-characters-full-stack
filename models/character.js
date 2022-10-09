@@ -22,7 +22,7 @@ const quoteSchema = new Schema({
         // object ID refrence (or Foreign Key)
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        
     }
 },{timestamps: true})
 

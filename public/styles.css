@@ -1,6 +1,15 @@
+/* body {
+    height: 100vh;
+    background-image: url("mt9qyf1uep431.webp");
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+} */
+
 body {
-    background-color: lightsteelblue;
+    background-color: antiquewhite;
 }
+
 
 .card {
     margin: 5px;
