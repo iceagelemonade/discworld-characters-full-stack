@@ -23,9 +23,7 @@ router.get("/", (req, res) => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
-
-
-
+            
             const randomQuote = randQuote(characters)
             console.log(randomQuote)
             res.render('characters/index', { characters, username, loggedIn, userId })
