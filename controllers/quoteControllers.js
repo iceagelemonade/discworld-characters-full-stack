@@ -52,8 +52,8 @@ router.delete('/delete/:charId/:quoteId', (req, res) => {
                 // only let the author of the comment delete it
                 if (theQuote.contributor == req.session.userId || char.contributor == req.session.userId) {
                     theQuote.remove()
-                    character.save()
-                    res.redirect(`/error?error=${err}`)
+                    char.save()
+                    res.redirect(`/characters/${char.id}`)
                     // return the saved fruit
                     return 
                 } else {
