@@ -17,7 +17,7 @@ const middleware = (app) => {
     app.use(morgan('tiny')) // this is for request logging, the 'tiny' arguement declares what size morgan log to use.
     app.use(express.urlencoded({extended: true})) // this parses urlEncoded request bodies(useful for Post and Put requests)
     app.use(express.static('public')) // serves files from the public folder statically
-    app.use(express.json()) // this parse incoming request payloads with JSON
+    // app.use(express.json()) // this parse incoming request payloads with JSON
     // we need to setup a session function and pass that function an object as the argument, that argument object will tell express session how to build our session
     app.use(
         session({
@@ -26,7 +26,7 @@ const middleware = (app) => {
                 mongoUrl: process.env.DATABASE_URL
             }),
             saveUninitialized: true,
-            reave: false
+            resave: false,
         })
     )
 }

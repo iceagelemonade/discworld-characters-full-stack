@@ -52,6 +52,6 @@ app.all('*', (req, res) => {
 // Server Listener
 /////////////////////////////////////////////
 const PORT = process.env.PORT
-// app.listen(PORT, () => console.log(`Now listening on port: ${PORT}`))
+app.listen(PORT, () => console.log(`Now listening on port: ${PORT}`))
 
 // END
