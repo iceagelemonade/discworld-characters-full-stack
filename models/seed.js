@@ -18,8 +18,8 @@ db.on('open', () => {
     ]
     
 
-    Character.deleteMany({})
-        .then(deletedCharacters => {
+    // Character.deleteMany({})
+        // .then(deletedCharacters => {
             Character.create(charSeed)
                 .then(data => {
                     db.close()
@@ -29,10 +29,10 @@ db.on('open', () => {
                     // allways close the connection to the db
                     db.close()
                 })
-            .catch(err => {
-                console.log(err)
-                // allways close the connection to the db
-                db.close()
-            })
-        })
+//             .catch(err => {
+//                 console.log(err)
+//                 // allways close the connection to the db
+//                 db.close()
+//             })
+//         })
 })
