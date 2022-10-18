@@ -12,6 +12,7 @@ processes = []
   PORT = "8080"
   SECRET = "sdhfgsldrghdjkhlgdfkjGNUTerryPratchett456fd4h64tgsffHJHSUGYHF565dsf645d5f4sd564g65gr45"
   DATABASE_URL = "mongodb+srv://iceagelemonade:qwertt55@discworldcharacters.zkrmrkm.mongodb.net/discworld?retryWrites=true&w=majority"
+  
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
