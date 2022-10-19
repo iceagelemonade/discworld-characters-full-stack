@@ -19,6 +19,13 @@ const app = require("liquid-express-views")(express())
 middleware(app)
 
 // Routes
+
+
+// root paths
+app.use('/characters', CharacterRouter)
+app.use('/users', UserRouter)
+app.use('/quotes', QuoteRouter)
+
 // Home Route:
 app.get("/", (req, res) => {
     if (req.session.loggedIn) {
@@ -27,11 +34,6 @@ app.get("/", (req, res) => {
         res.render('index.liquid')
     }
 })
-
-// root paths
-app.use('/characters', CharacterRouter)
-app.use('/users', UserRouter)
-app.use('/quotes', QuoteRouter)
 
 // this renders an error page, gets the error from a URL request query
 app.get('/error', (req, res) => {

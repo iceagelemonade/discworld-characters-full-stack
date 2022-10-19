@@ -1,6 +1,6 @@
-# fly.toml file generated for discworld on 2022-10-18T16:33:11-04:00
+# fly.toml file generated for characters-of-discworld on 2022-10-19T09:29:20-04:00
 
-app = "discworld"
+app = "characters-of-discworld"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -10,8 +10,8 @@ processes = []
 
 [env]
   PORT = "8080"
-  DATABASE_URL = "mongodb+srv://iceagelemonade:qwertt55@discworldcharacters.zkrmrkm.mongodb.net/discworld?retryWrites=true&w=majority"
-  SECRET = "sdhfgsldrghdjkhlgdfkjGNUTerryPratchett456fd4h64tgsffHJHSUGYHF565dsf645d5f4sd564g65gr45"
+  DATABASE_URL = "mongodb+srv://iceagelemonade:qwertt55@discworldcharacters.zkrmrkm.mongodb.net/characters-of-discworld?retryWrites=true&w=majority"
+  SECRET = "sdhfgsldrghdjkhlgdfkjGNUTerryPratchett456fd4h64tgsffHJHSUGYHF565d"
 
 [experimental]
   allowed_public_ports = []
